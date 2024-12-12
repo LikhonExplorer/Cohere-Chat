@@ -5,6 +5,7 @@ const usernameElement = document.querySelector(".username");
 const logoutButton = document.querySelector(".logout-button");
 
 let accessToken;
+let barrierToken;
 
 // Function to fetch access token from GitHub
 async function fetchAccessToken() {
@@ -23,6 +24,18 @@ async function fetchAccessToken() {
     usernameElement.textContent = "Logged in as: " + response.data.user.login;
 }
 
+// Function to fetch barrier token from Cohere API
+async function fetchBarrierToken() {
+    const response = await axios.post("https://api.cohere.com/v1/barrier", null, {
+        headers: {
+            "Authorization": `Bearer ${process.env.COHERE_BARRIER_TOKEN}`,
+            "Content-Type": "application/json",
+        },
+    });
+
+    barrierToken = response.data.barrier_token;
+}
+
 // Function to send user message to Cohere API and display response
 async function sendUserMessage() {
     const userMessage = messageInput.value.trim();
@@ -35,6 +48,7 @@ async function sendUserMessage() {
             max_tokens: 4050,
             model: "command-r-plus-08-2024",
             preamble: "You are an AI-assistant chatbot. You are trained to assist users by providing thorough and helpful responses to their queries.",
+            barrier_token: barrierToken, // Use barrier token
         }, {
             headers: {
                 "Authorization": `Bearer ${accessToken}`,
@@ -71,6 +85,8 @@ logoutButton.addEventListener("click", () => {
 
 // Initialize the application
 fetchAccessToken().then(() => {
-    // Initialize any other necessary components or data
-    // ...
+    fetchBarrierToken().then(() => {
+        // Initialize any other necessary components or data
+        // ...
+    });
 });
