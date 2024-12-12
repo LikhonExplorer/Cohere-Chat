@@ -1,0 +1,19 @@
+# Enable gzip compression
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json
+</IfModule>
+
+# Set character encoding
+AddDefaultCharset UTF-8
+
+# Set cache control headers
+<IfModule mod_headers.c>
+    <FilesMatch "\.(js|css|png|jpg|jpeg|gif|ico|swf|ttf|woff|woff2|eot|svg|pdf|txt|xml|json)$">
+        Header set Cache-Control "max-age=31536000, public"
+    </FilesMatch>
+</IfModule>
+
+# Redirect HTTP to HTTPS
+RewriteEngine On
+RewriteCond %{HTTPS} !=on
+RewriteRule ^ https://cohore-chat.vercel.app%{REQUEST_URI} [R,L]
