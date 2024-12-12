@@ -1,0 +1,11 @@
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Advanced Chat Application",
+  "description": "An advanced chat application with GitHub authentication and Cohere AI integration.",
+  "applicationCategory": "Communication",
+  "url": "https://cohore-chat.vercel.app",
+  "sameAs": [
+    "https://github.com/LikhonExplorer/Cohere-Chat"
+  ]
+}
