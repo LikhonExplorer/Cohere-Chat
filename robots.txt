@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /
+
+Sitemap: https://cohore-chat.vercel.app/sitemap.xml
